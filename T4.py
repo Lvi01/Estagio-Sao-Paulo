@@ -10,8 +10,7 @@ def main():
     ES = 27165.48
     Outros = 19849.53
     
-    Total = (SP + RJ + MG + 
-                         ES + Outros)
+    Total = (SP + RJ + MG + ES + Outros)
     
     percentual_sp = Calcular(SP, Total)
     percentual_rj = Calcular(RJ, Total)
