@@ -4,35 +4,36 @@
 
 import json
 
-#Funcao responsavel por ler o arquivo json e guardar os seus dados
+# Função responsável por ler o arquivo JSON e guardar os seus dados
 def ler_faturamento_json(filename):
     with open(filename, 'r') as file:
         data = json.load(file)
-    faturamento = data.get("faturamento", [])
+    
+    faturamento = [item['valor'] for item in data]
     return faturamento
 
-#Funcao responsavel por identificar o maior e menor entre os valores
+# Função responsável por identificar o maior e menor entre os valores
 def calcular_menor_maior(faturamento):
-    valores_validos = [valor for valor in faturamento if valor is not None]
+    valores_validos = [valor for valor in faturamento if valor > 0]
     menor = min(valores_validos) if valores_validos else None
     maior = max(valores_validos) if valores_validos else None
     return menor, maior
 
-#Funcao responsavel por calcular a media
+# Função responsável por calcular a média
 def calcular_media(faturamento):
-    valores_validos = [valor for valor in faturamento if valor is not None]
+    valores_validos = [valor for valor in faturamento if valor > 0]
     if valores_validos:
         return sum(valores_validos) / len(valores_validos)
     return None
 
-#Compara e verifica os dias que estao acima da media
+# Compara e verifica os dias que estão acima da média
 def contar_dias_acima_media(faturamento, media):
     if media is None:
         return 0
-    return sum(1 for valor in faturamento if valor is not None and valor > media)
+    return sum(1 for valor in faturamento if valor > media)
 
 def main():
-    filename = 'faturamento.json'
+    filename = 'dados.json'
     faturamento = ler_faturamento_json(filename)
 
     menor, maior = calcular_menor_maior(faturamento)
@@ -41,7 +42,7 @@ def main():
 
     print(f"Menor valor de faturamento: {menor}")
     print(f"Maior valor de faturamento: {maior}")
-    print(f"Media de valor de faturamento: {media}")
+    print(f"Média de valor de faturamento: {media}")
     print(f"Número de dias com faturamento acima da média: {dias_acima_media}")
 
 if __name__ == "__main__":
